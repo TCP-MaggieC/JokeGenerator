@@ -10,14 +10,9 @@ namespace JokeService
     public class JokeCheckService : JokeCheck.JokeCheckBase
     {
         private readonly ILogger<JokeCheckService> _logger;
-        static string[] results = new string[500/*50*/];
+        static string[] results = new string[50];
         static Tuple<string, string> names;
-        //private static readonly Dictionary<string, Int32> customerTrustedCredit = new Dictionary<string, Int32>()
-        //{
-        //    {"id0201", 10000},
-        //    {"id0417", 5000},
-        //    {"id0306", 15000}
-        //};
+
         public JokeCheckService(ILogger<JokeCheckService> logger)
         {
             _logger = logger;
@@ -25,36 +20,40 @@ namespace JokeService
 
         public override Task<JokeReply> CheckJokeRequest(JokeRequest request, ServerCallContext context)
         {
-            var response = GetRandomJokes(request, 1);
 
-            return Task.FromResult(new JokeReply
+
+                var response = GetRandomJokes(request);
+
+                return Task.FromResult(new JokeReply
+                {
+                    Message = response[0]
+                });
+
+
+        }
+
+        public override Task<CategoryReply> CheckJokeCategoryRequest(CategoryRequest request, ServerCallContext context)
+        {
+            var response = GetCategories();
+
+            return Task.FromResult(new CategoryReply
             {
                 Message = response[0]
-            }) ;
-
+            });
         }
 
-        //private static void GetRandomJokes(string category, int number)
-        //{
-        //    new JsonFeed("https://api.chucknorris.io", number);
-        //    results = JsonFeed.GetRandomJokes(names?.Item1, names?.Item2, category);
-        //}
 
-
-        public string[] GetRandomJokes(JokeRequest request, int number)
+        public string[] GetRandomJokes(JokeRequest request)
         {
-            //new JsonFeed("https://api.chucknorris.io", number);
-           
-            //return JsonFeed.GetRandomJokes(names?.Item1, names?.Item2, category);
-
-            var feed = new JsonFeed("https://api.chucknorris.io", number);
-            return feed.GetRandomJokes(request.Name, request.Name,request.Category);
+            var feed = new JsonFeed("https://api.chucknorris.io", request.Number);
+            return feed.GetRandomJokes(request);
         }
 
-        public static void getCategories()
+        public string[]  GetCategories()
         {
-            new JsonFeed("https://api.chucknorris.io", 0);
-            results = JsonFeed.GetCategories();
+            var feed = new JsonFeed("https://api.chucknorris.io", 0);
+            results = feed.GetCategories();
+            return results;
         }
 
         public static void GetNames()
@@ -64,16 +63,5 @@ namespace JokeService
             names = Tuple.Create(result.name.ToString(), result.surname.ToString());
         }
 
-        //private bool IsEligibleForCredit(string customerId, Int32 credit)
-        //{
-        //    bool isEligible = false;
-
-        //    if (customerTrustedCredit.TryGetValue(customerId, out Int32 maxCredit))
-        //    {
-        //        isEligible = credit <= maxCredit;
-        //    }
-
-        //    return isEligible;
-        //}
     }
 }

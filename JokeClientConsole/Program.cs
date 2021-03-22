@@ -6,28 +6,102 @@ namespace JokeClientConsole
 {
     class Program
     {
-        static string[] results = new string[500/*50*/];
+        static string[] results = new string[50];
         static char key;
-        static Tuple<string, string> names;
         static ConsolePrinter printer = new ConsolePrinter();
         static async Task Main(string[] args)
         {
-            // The port number(5001) must match the port of the gRPC server.
-            var channel = GrpcChannel.ForAddress("https://localhost:5001");
-            var client = new JokeCheck.JokeCheckClient(channel);
-            var jokeRequest = new JokeRequest { Name = "Maggie", Category = "career" };
-            var reply = await client.CheckJokeRequestAsync(jokeRequest);
 
-            Console.WriteLine($"Hello {jokeRequest.Name}! Enjoy the joke for {jokeRequest.Category.ToUpper()} category: {reply.Message}");
+            printer.Value("Press ? to get instructions.").ToString();
+            if (Console.ReadLine() == "?")
+            {
+                while (true)
+                {
+                    // The port number(5001) must match the port of the gRPC server.
+                    var channel = GrpcChannel.ForAddress("https://localhost:5001");
+                    var client = new JokeCheck.JokeCheckClient(channel);
 
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
+                    printer.Value("Press c to get categories").ToString();
+                    printer.Value("Press r to get random jokes").ToString();
+                    GetEnteredKey(Console.ReadKey());
+
+                    if (key == 'c')
+                    {
+                        var request = new CategoryRequest(); 
+                        var reply = await client.CheckJokeCategoryRequestAsync(request);
+                        Console.WriteLine($"Hello, you can select any category from: {reply.Message}"); 
+                    }
+
+                    if (key == 'r')
+                    {
+
+                        var jokeRequest = new JokeRequest();
+
+                        //printer.Value("Want to use a random name? y/n").ToString();
+                        //GetEnteredKey(Console.ReadKey());
+                        //if (key == 'y')
+                        //{
+                        //    GetNames();
+                        //}
+
+                        printer.Value("Want to specify a category? y/n").ToString();
+                        GetEnteredKey(Console.ReadKey());
+                        if (key == 'y')
+                        {
+                            //printer.Value("How many jokes do you want? (1-9)").ToString();
+                            //int n = Int32.Parse(Console.ReadLine());
+                            printer.Value("Enter a category:").ToString();
+                            //GetRandomJokes(Console.ReadLine(), n);
+             
+                            // PrintResults();
+
+                            jokeRequest.Category = Console.ReadLine();
+                        }
+                        //else
+                        //{
+                            //printer.Value("How many jokes do you want? (1-9)").ToString();
+                            //int n = Int32.Parse(Console.ReadLine());
+                           // GetRandomJokes(null, n);
+                           // PrintResults();
+                       // }
+
+                        printer.Value("How many jokes do you want? (1-9)").ToString();
+                        int n = Int32.Parse(Console.ReadLine());
+                        jokeRequest.Number = n;
+                        var reply = new JokeReply();
+                        var success = true;
+                        try
+                        {
+                            reply = await client.CheckJokeRequestAsync(jokeRequest);
+                        }
+                        catch (Exception ex)
+                        {
+                            //To do: logger ex
+                           
+                            reply.Message = "Joke service is not available at this moment. Please come back later.";
+                            success = false;
+                        }
+                        Console.WriteLine($"Hello {jokeRequest.FirstName} {jokeRequest.LastName}!");
+                        if (success) {
+                            Console.WriteLine($"Enjoy the joke for {jokeRequest.Category.ToUpper()} category: {reply.Message}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Sorry, {reply.Message}");
+                        }
+                    }
+
+                    Console.WriteLine("Press any key to exit...");
+                    Console.ReadKey();
+                }
+            }
         }
 
 
         private static void PrintResults()
         {
-            printer.Value("[" + string.Join(",", results) + "]").ToString();
+            printer.Value(results).ToString();
+     
         }
 
         private static void GetEnteredKey(ConsoleKeyInfo consoleKeyInfo)

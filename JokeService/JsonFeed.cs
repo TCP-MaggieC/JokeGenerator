@@ -18,28 +18,32 @@ namespace JokeService
             _url = endpoint;
         }
         
-		public  string[] GetRandomJokes(string firstname, string lastname, string category)
+		public string[] GetRandomJokes(JokeRequest request)
 		{
 			HttpClient client = new HttpClient();
 			client.BaseAddress = new Uri(_url);
 			string url = "jokes/random";
-			if (category != null)
+			if (request.Category != null)
 			{
 				if (url.Contains('?'))
 					url += "&";
 				else url += "?";
 				url += "category=";
-				url += category;
+				url += request.Category;
 			}
 
-            string joke = Task.FromResult(client.GetStringAsync(url).Result).Result;
 
-            if (firstname != null && lastname != null)
+
+				string joke = Task.FromResult(client.GetStringAsync(url).Result).Result;
+
+
+
+            if (request.FirstName != null && request.LastName != null)
             {
                 int index = joke.IndexOf("Chuck Norris");
                 string firstPart = joke.Substring(0, index);
                 string secondPart = joke.Substring(0 + index + "Chuck Norris".Length, joke.Length - (index + "Chuck Norris".Length));
-                joke = firstPart + " " + firstname + " " + lastname + secondPart;
+                joke = firstPart + " " + request.FirstName + " " + request.LastName + secondPart;
             }
 
             return new string[] { JsonConvert.DeserializeObject<dynamic>(joke).value };
@@ -58,11 +62,11 @@ namespace JokeService
 			return JsonConvert.DeserializeObject<dynamic>(result);
 		}
 
-		public static string[] GetCategories()
+		public string[] GetCategories()
 		{
 			HttpClient client = new HttpClient();
 			client.BaseAddress = new Uri(_url);
-			//return new string[] { Task.FromResult(client.GetStringAsync("categories").Result).Result }; //Maggie
+			//return new string[] { Task.FromResult(client.GetStringAsync("categories").Result).Result }; //Maggie bug fix to correct uri
 			return new string[] { Task.FromResult(client.GetStringAsync("jokes/categories").Result).Result };
 		}
     }

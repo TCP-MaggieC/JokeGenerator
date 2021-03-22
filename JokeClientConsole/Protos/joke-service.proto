@@ -5,20 +5,28 @@ option csharp_namespace = "JokeService";
 package Joke;
 
 service JokeCheck {
-
   rpc CheckJokeRequest (JokeRequest) returns (JokeReply);
+  rpc CheckJokeCategoryRequest (CategoryRequest) returns (CategoryReply);
 }
 
 
 message JokeRequest {
-  string name = 1;
-  string category = 2;
-//string customerId = 1;
- // int32 credit = 2;
+  string FirstName = 1;
+  string LastName = 2;
+  string category = 3;
+  int32 number = 4;
 }
 
 
 message JokeReply {
- string message = 1;
- // bool isAccepted = 1;
+  string message = 1;
+}
+
+message CategoryRequest{
+  
+}
+
+message CategoryReply
+{
+	string message = 1;
 }
