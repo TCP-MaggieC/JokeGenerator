@@ -10,7 +10,7 @@ namespace ConsoleApp1
 {
     class Program
     {
-        static string[] results = new string[500/*50*/];
+        static string[] results = new string[50];
         static char key;
         static Tuple<string, string> names;
         static ConsolePrinter printer = new ConsolePrinter();

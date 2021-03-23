@@ -5,23 +5,24 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using JokeService.Contracts;
 
 namespace JokeService
 {
-    public class JsonFeed
+    public class JsonFeed :IJsonFeed
     {
-        static string _url = "";
-
+      // ---begin to remove once get mock unit test working----
+		static string _url = "";
         public JsonFeed() { }
-        public JsonFeed(string endpoint, int results)
+        public JsonFeed(string endpoint)//, int results)
         {
             _url = endpoint;
         }
-        
-		public string[] GetRandomJokes(JokeRequest request)
+		// ------end--------
+        public string[] GetRandomJokes(JokeRequest request)
 		{
 			HttpClient client = new HttpClient();
-			client.BaseAddress = new Uri(_url);
+			client.BaseAddress = new Uri(request.Uri);//(_url);
 			string url = "jokes/random";
 			if (request.Category != null)
 			{
@@ -32,11 +33,7 @@ namespace JokeService
 				url += request.Category;
 			}
 
-
-
-				string joke = Task.FromResult(client.GetStringAsync(url).Result).Result;
-
-
+			string joke = Task.FromResult(client.GetStringAsync(url).Result).Result;
 
             if (request.FirstName != null && request.LastName != null)
             {
@@ -54,18 +51,18 @@ namespace JokeService
         /// </summary>
         /// <param name="client2"></param>
         /// <returns></returns>
-		public static dynamic Getnames()
-		{
-			HttpClient client = new HttpClient();
-			client.BaseAddress = new Uri(_url);
-			var result = client.GetStringAsync("").Result;
-			return JsonConvert.DeserializeObject<dynamic>(result);
-		}
+		//public dynamic Getnames()
+		//{
+		//	HttpClient client = new HttpClient();
+		//	client.BaseAddress = new Uri(_url);
+		//	var result = client.GetStringAsync("").Result;
+		//	return JsonConvert.DeserializeObject<dynamic>(result);
+		//}
 
-		public string[] GetCategories()
+		public string[] GetCategories(CategoryRequest request)
 		{
 			HttpClient client = new HttpClient();
-			client.BaseAddress = new Uri(_url);
+			client.BaseAddress = new Uri(request.Uri);//(_url);//new Uri(_url);
 			//return new string[] { Task.FromResult(client.GetStringAsync("categories").Result).Result }; //Maggie bug fix to correct uri
 			return new string[] { Task.FromResult(client.GetStringAsync("jokes/categories").Result).Result };
 		}

@@ -15,6 +15,7 @@ message JokeRequest {
   string LastName = 2;
   string category = 3;
   int32 number = 4;
+  string uri = 5;
 }
 
 
@@ -23,7 +24,7 @@ message JokeReply {
 }
 
 message CategoryRequest{
-  
+  string uri = 1;
 }
 
 message CategoryReply

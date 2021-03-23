@@ -9,6 +9,7 @@ namespace JokeClientConsole
         static string[] results = new string[50];
         static char key;
         static ConsolePrinter printer = new ConsolePrinter();
+        static string endpoint = "https://api.chucknorris.io";
         static async Task Main(string[] args)
         {
 
@@ -27,7 +28,8 @@ namespace JokeClientConsole
 
                     if (key == 'c')
                     {
-                        var request = new CategoryRequest(); 
+                        var request = new CategoryRequest();
+                        request.Uri = endpoint;
                         var reply = await client.CheckJokeCategoryRequestAsync(request);
                         Console.WriteLine($"Hello, you can select any category from: {reply.Message}"); 
                     }
@@ -48,12 +50,8 @@ namespace JokeClientConsole
                         GetEnteredKey(Console.ReadKey());
                         if (key == 'y')
                         {
-                            //printer.Value("How many jokes do you want? (1-9)").ToString();
-                            //int n = Int32.Parse(Console.ReadLine());
+
                             printer.Value("Enter a category:").ToString();
-                            //GetRandomJokes(Console.ReadLine(), n);
-             
-                            // PrintResults();
 
                             jokeRequest.Category = Console.ReadLine();
                         }
@@ -68,6 +66,7 @@ namespace JokeClientConsole
                         printer.Value("How many jokes do you want? (1-9)").ToString();
                         int n = Int32.Parse(Console.ReadLine());
                         jokeRequest.Number = n;
+                        jokeRequest.Uri = endpoint;
                         var reply = new JokeReply();
                         var success = true;
                         try
@@ -91,7 +90,7 @@ namespace JokeClientConsole
                         }
                     }
 
-                    Console.WriteLine("Press any key to exit...");
+                   // Console.WriteLine("Press any key to exit...");
                     Console.ReadKey();
                 }
             }
