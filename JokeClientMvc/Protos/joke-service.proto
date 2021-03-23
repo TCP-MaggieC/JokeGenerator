@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option csharp_namespace = "JokeService";
+
+package Joke;
+
+service JokeCheck {
+  rpc CheckJokeRequest (JokeRequest) returns (JokeReply);
+  rpc CheckJokeCategoryRequest (CategoryRequest) returns (CategoryReply);
+}
+
+
+message JokeRequest {
+  string FirstName = 1;
+  string LastName = 2;
+  string category = 3;
+  int32 number = 4;
+  string uri = 5;
+}
+
+
+message JokeReply {
+  string message = 1;
+}
+
+message CategoryRequest{
+  string uri = 1;
+}
+
+message CategoryReply
+{
+	string message = 1;
+}

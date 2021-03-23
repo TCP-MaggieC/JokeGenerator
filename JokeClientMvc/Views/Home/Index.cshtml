@@ -1,0 +1,60 @@
+﻿@model List<JokeClientMvc.Models.JokeCategoryModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h4 class="display-4">Welcome to Joke Generator </h4>
+</div>
+<div class="text-body">
+  
+        <div class="row display-6">
+            <label id="">
+                <span id="" style="color:darkred">Select Joke Category</span>
+            </label>
+        </div>
+        <div class="row">
+            @foreach (var m in Model)
+            {
+                <div class="col-md-12">
+                    <div class="row">
+                        <label id="categary">
+                            <input type="radio" /><span id="jokecategory" style="color:darkred"> @m.JokeCategory </span>
+                        </label>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <label id="FirstName">
+                        <span id="firstname" style="color:darkred">First Name</span><br /><input type="text" />
+                    </label>
+                </div>
+                <div class="row">
+                    <label id="LastName">
+                        <span id="lastname" style="color:darkred">Last Name </span><br /><input type="text" />
+                    </label>
+                </div>
+                <div class="row">
+                    <label id="JokeNumber">
+                        <span id="jokenumber" style="color:darkred">Joke Count </span><br /><input type="text" />
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 ">
+                <span class="btn-primary"><input type="button" value="Submit" /></span>
+               
+            </div>
+        </div>
+
+
+    </div>
+

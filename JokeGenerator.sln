@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JokeGenerator", "ConsoleApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JokeServiceTest", "JokeServiceTest\JokeServiceTest.csproj", "{5FFAF927-AB81-47B3-B9FC-3BFCE61CE3B7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JokeClientMvc", "JokeClientMvc\JokeClientMvc.csproj", "{B55D9415-56F1-4965-87F4-E15AA5CCACA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5FFAF927-AB81-47B3-B9FC-3BFCE61CE3B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FFAF927-AB81-47B3-B9FC-3BFCE61CE3B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FFAF927-AB81-47B3-B9FC-3BFCE61CE3B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B55D9415-56F1-4965-87F4-E15AA5CCACA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B55D9415-56F1-4965-87F4-E15AA5CCACA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B55D9415-56F1-4965-87F4-E15AA5CCACA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B55D9415-56F1-4965-87F4-E15AA5CCACA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
