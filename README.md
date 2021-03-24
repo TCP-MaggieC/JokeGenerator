@@ -1,5 +1,4 @@
 # JokeGenerator
-Call Joke api
 
 The application provides end users to pull ramdom joke(s) based on the category user selects via console & UI.
 The solution uses .net 5 as IDE, backed with microservices backend to enable each component independantly deployable, and scalable. 
