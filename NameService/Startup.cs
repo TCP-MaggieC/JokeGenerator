@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using JokeService.Contracts;
+using NameService.Contracts;
 
-namespace JokeService
+namespace NameService
 {
     public class Startup
     {
@@ -17,7 +17,7 @@ namespace JokeService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IJsonFeed, JsonFeed>();
+            services.AddScoped<INameCheckService, NameCheckService>();
             services.AddGrpc();
         }
 
@@ -33,7 +33,7 @@ namespace JokeService
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<JokeCheckService>();
+                endpoints.MapGrpcService<NameCheckService>();
 
                 endpoints.MapGet("/", async context =>
                 {

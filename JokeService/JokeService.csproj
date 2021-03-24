@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Protobuf Include="Protos\joke-service.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\name-service.proto" GrpcServices="Client" />
   </ItemGroup>
 
   <ItemGroup>

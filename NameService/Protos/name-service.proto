@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "NameService";
+
+package Name;
+
+service NameCheck {
+
+  rpc CheckNameRequest (NameRequest) returns (NameReply);
+}
+
+
+message NameRequest {
+ 
+}
+
+
+message NameReply {
+  string message = 1;
+}

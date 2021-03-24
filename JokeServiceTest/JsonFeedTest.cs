@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using JokeService;
 using JokeService.Contracts;
-using NUnit.Framework;
+
 using Moq;
 
 namespace JokeServiceTest
@@ -26,29 +26,37 @@ namespace JokeServiceTest
             request.LastName = "Chen";
             request.Category = "animal";// "aminal";
             request.Uri = "https://api.chucknorris.io";
-            var feed = new JsonFeed("https://api.chucknorris.io");//, 1);
+            var feed = new JsonFeed();// ("https://api.chucknorris.io");//, 1);
             var res = feed.GetRandomJokes(request);
             Assert.IsNotNull(res);
 
             //mockFeed = new Mock<IJsonFeed>(MockBehavior.Strict);
             //mockFeed.Setup(p => p.GetRandomJokes(request)).Returns(expectedResult);
 
-
             //systemUnderTest = new JsonFeed();
             //var result = systemUnderTest.GetRandomJokes(request);
             //Assert.IsNotNull(result);
-
-
         }
 
 
         [Test]
-        public void GetCategories(CategoryRequest request)
+        public void GetCategories()
         {
-         //   IJsonFeed feed;
-            var feed = new JsonFeed("https://api.chucknorris.io");//, 1);
+            var request = new CategoryRequest();
+            var feed = new JsonFeed();// ("https://api.chucknorris.io");//, 1);
             request.Uri = "https://api.chucknorris.io";
             var res = feed.GetCategories(request);
+
+            Assert.IsNotNull(res);
+        }
+
+        [Test]
+        public void GetNames()
+        {
+            var request = new NameRequest();
+            var feed = new JsonFeed();// ("https://api.chucknorris.io");//, 1);
+            request.Uri = "https://www.names.privserv.com/api/";
+            var res = feed.GetNames(request);
 
             Assert.IsNotNull(res);
         }

@@ -13,9 +13,9 @@ namespace JokeService
     {
         private readonly ILogger<JokeCheckService> _logger;
         private IJsonFeed _feed;
-        static string[] results = new string[50];
-        static Tuple<string, string> names;
-
+      //  private static Tuple<string, string> _names;
+        private string _urlJoke = "https://api.chucknorris.io";
+        private string _urlName = "https://www.names.privserv.com/api/";
         public JokeCheckService(ILogger<JokeCheckService> logger, IJsonFeed feed)
         {
             _logger = logger;
@@ -24,7 +24,7 @@ namespace JokeService
 
         public override Task<JokeReply> CheckJokeRequest(JokeRequest request, ServerCallContext context)
         {
-
+            request.Uri = _urlJoke;
             var response = _feed.GetRandomJokes(request);
 
                 return Task.FromResult(new JokeReply
@@ -36,6 +36,7 @@ namespace JokeService
 
         public override Task<CategoryReply> CheckJokeCategoryRequest(CategoryRequest request, ServerCallContext context)
         {
+            request.Uri = _urlJoke;
             var response = _feed.GetCategories(request);
 
             return Task.FromResult(new CategoryReply
@@ -44,26 +45,18 @@ namespace JokeService
             });
         }
 
+        public override Task<NameReply> CheckJokeNameRequest(NameRequest request, ServerCallContext context)
+        {
+            request.Uri = _urlName;
+            var response = _feed.GetNames(request);
+         //   _names = Tuple.Create(response.name.ToString(), response.surname.ToString());
+            return Task.FromResult(new NameReply
+            {
+                FirstName = response.name.ToString(),
+                LastName = response.surname.ToString()
+            });
+        }
 
-        //public string[] GetRandomJokes(JokeRequest request)
-        //{
-        //    var feed = new JsonFeed("https://api.chucknorris.io");//, request.Number);
-        //    return feed.GetRandomJokes(request);
-        //}
-
-        //public string[]  GetCategories()
-        //{
-        //    var feed = new JsonFeed("https://api.chucknorris.io");//, 0);
-        //    results = feed.GetCategories();
-        //    return results;
-        //}
-
-        //public static void GetNames()
-        //{
-        //    var feed  = new JsonFeed("https://www.names.privserv.com/api/");//, 0);
-        //    dynamic result = feed.Getnames();
-        //    names = Tuple.Create(result.name.ToString(), result.surname.ToString());
-        //}
 
     }
 }

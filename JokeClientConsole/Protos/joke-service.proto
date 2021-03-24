@@ -7,6 +7,7 @@ package Joke;
 service JokeCheck {
   rpc CheckJokeRequest (JokeRequest) returns (JokeReply);
   rpc CheckJokeCategoryRequest (CategoryRequest) returns (CategoryReply);
+  rpc CheckJokeNameRequest (NameRequest) returns (NameReply);
 }
 
 
@@ -31,3 +32,14 @@ message CategoryReply
 {
 	string message = 1;
 }
+
+message NameRequest{
+  string uri = 1;
+}
+
+message NameReply
+{
+	string FirstName = 1;
+	string LastName =2;
+}
+

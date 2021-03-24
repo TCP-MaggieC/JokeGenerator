@@ -7,12 +7,9 @@ namespace JokeService.Contracts
 {
     public interface IJsonFeed
     {
-        //string Endpoint { 
-        //    get { return ""; } 
-        //    set { }
-        //}
+
         string[] GetRandomJokes(JokeRequest request);
         string[] GetCategories(CategoryRequest request);
-       // dynamic Getnames();
+        dynamic GetNames(NameRequest request);
     }
 }
