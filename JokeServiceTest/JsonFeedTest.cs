@@ -54,7 +54,7 @@ namespace JokeServiceTest
         public void GetNames()
         {
             var request = new NameRequest();
-            var feed = new JsonFeed();// ("https://api.chucknorris.io");//, 1);
+            var feed = new JsonFeed();//("https://api.chucknorris.io");//, 1);
             request.Uri = "https://www.names.privserv.com/api/";
             var res = feed.GetNames(request);
 

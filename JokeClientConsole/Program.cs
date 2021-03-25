@@ -6,9 +6,10 @@ namespace JokeClientConsole
 {
     class Program
     {
-      //  static string[] results = new string[50];
+
         static char key;
         static ConsolePrinter printer = new ConsolePrinter();
+  
 
         static async Task Main(string[] args)
         {
@@ -56,7 +57,7 @@ namespace JokeClientConsole
                             }
 
                             printer.Value("How many jokes do you want? (1-9)").ToString();
-                           // GetEnteredKey(Console.ReadKey());
+                           //GetEnteredKey(Console.ReadLine());
                               int n = Int32.Parse(Console.ReadLine());
                          
                             jokeRequest.Number = n;
@@ -85,7 +86,7 @@ namespace JokeClientConsole
                             }
                         }
 
-                        Console.WriteLine("Press any key to continue new joke...");
+                        Console.WriteLine("Press any key to continue new joke... Press ctrl+c to exit...");
                         Console.ReadKey();
                     }
                 }
@@ -211,6 +212,5 @@ namespace JokeClientConsole
             
         }
 
-      
     }
 }
